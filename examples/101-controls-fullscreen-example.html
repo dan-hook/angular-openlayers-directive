@@ -9,17 +9,16 @@
     <link rel="stylesheet" href="../dist/angular-openlayers-directive.css" />
     <script>
       var app = angular.module("demoapp", ["openlayers-directive"]);
-      app.controller("ControlFullscreenController", [ '$scope', '$http', 'olData', function($scope, $http, olData) {
-        angular.extend($scope, {
-            center: {
+      app.controller("ControlFullscreenController", ['$http', 'olData', function($http, olData) {
+            this.center= {
                 lat: 43.88,
                 lon: 7.57,
                 zoom: 4
-            },
-            view: {
+            };
+            this.view= {
                 rotation: -1
-            },
-            layers: {
+            };
+            this.layers= {
                 main: {
                     source: {
                         type: 'BingMaps',
@@ -27,18 +26,17 @@
                         imagerySet: 'Aerial'
                     }
                 }
-            },
-            controls: [
+            };
+            this.controls= [
                 { name: 'zoom', active: true },
                 { name: 'fullscreen', active: true }
-            ]
-        });
+            ];
       } ]);
       </script>
   </head>
-  <body ng-controller="ControlFullscreenController">
-     <openlayers ol-center="center" ol-layers="layers" ol-view="view">
-         <ol-control name="{{ control.name }}" ng-repeat="control in controls|filter: {active: true}"></ol-control>
+  <body ng-controller="ControlFullscreenController as ctrl">
+     <openlayers ol-center="ctrl.center" ol-layers="ctrl.layers" ol-view="ctrl.view">
+         <ol-control name="{{ control.name }}" ng-repeat="control in ctrl.controls|filter: {active: true}"></ol-control>
      </openlayers>
      <h1>Fullscreen control example</h1>
      <p>Example of the fullscreen control. Controls object:</p>
